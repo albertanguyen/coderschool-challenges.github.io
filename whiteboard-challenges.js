@@ -88,27 +88,37 @@ My ideas:
 */
 
 /* fake data:
-    array contains random numbers, string characters
+    2 arrays that each contains random numbers, string characters
+    combine 2 arrays and suffle indices to have a new array
+    how to suffle indices: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 */
 const testStringArray = (n) => Array.from({ length: n }, () => Math.random().toString(36).substring(7)); 
 const testNumArray = (n) => Array.from({ length: n }, () => Math.floor(Math.random() * 40));
-// const testArray = testStringArray.concat(testNumArray)
-const testArray = (testStringArray, testNumArray, n) => {
-    for (let i = 0; i < n; i++) {
 
+const testArray1 = testStringArray(10)
+const testArray2 = testNumArray(10)
+const testArray = testArray1.concat(testArray2)
+// console.log(testArray)
+const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
+    return array;
 }
-console.log(testArray)
+
+const testRandomizedArray = shuffleArray(testArray);
+console.log(testRandomizedArray)
 
 function logInteger(array) {
     // for (let i=0; i < array.length; i++) {
     //     firstcheck = parseFloat(array[i])
     //     const decpoint = firstcheck.toString().indexOf('.');
     // }
-    return setTimeout(array.map( element => {
+    return array.map( element => {
         firstcheck = parseFloat(element)
         const decpoint = firstcheck.toString().indexOf('.'); // returning -1 means that there is no period within the string
-        console.log(firstcheck, decpoint)
+        // console.log(firstcheck, decpoint)
         while (typeof firstcheck === "number") {
             if (element.toString().indexOf(2) && decpoint === -1) {
                 return "fizz";
@@ -118,8 +128,8 @@ function logInteger(array) {
                 return 'fizzbuzz';
             }
         }
-    }), 1000)
+    })
 }
 
 
-console.log(logInteger([1,2.01,4.009,'a', 5]))
+console.log(logInteger(testRandomizedArray))
