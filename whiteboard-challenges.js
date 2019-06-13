@@ -133,3 +133,19 @@ function logInteger(array) {
 
 
 console.log(logInteger(testRandomizedArray))
+
+/* Question: If I have a string like 
+“I am am the best best please please hire me as a developer developer please”, 
+how would I remove all the repeated words?*/
+
+
+let unbelievableString = "I am am the best best please please hire me as a developer developer please";
+const myArray = unbelievableString.split(' ');
+const myOrderedArray = myArray.reduce((accumulator, currentValue) => {
+    if (accumulator.indexOf(currentValue) === -1) {
+        accumulator.push(currentValue);
+    }
+    return accumulator
+}, [])
+
+console.log(myOrderedArray)
